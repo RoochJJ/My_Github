@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz Multi-Categorias - Teste seus Conhecimentos</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6; color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        header { text-align: center; margin-bottom: 40px; color: white; padding: 30px; background: rgba(255,255,255,0.1); border-radius: 20px; backdrop-filter: blur(10px); }
+        header h1 { font-size: 3em; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { transform: scale(1);} 50% { transform: scale(1.05);} 100% { transform: scale(1);} }
+        header p { font-size: 1.2em; opacity: 0.9; }
+        .category-selection { background: white; border-radius: 20px; padding: 40px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); margin-bottom: 20px; text-align: center; }
+        .category-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 30px; }
+        .category-card { background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border: 3px solid transparent; border-radius: 15px; padding: 30px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden; }
+        .category-card::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent); transition: left 0.5s; }
+        .category-card:hover::before { left: 100%; }
+        .category-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.2); border-color: #667eea; }
+        .category-icon { font-size: 3em; margin-bottom: 15px; display: block; }
+        .category-title { font-size: 1.3em; font-weight: bold; color: #333; margin-bottom: 10px; }
+        .category-desc { color: #666; font-size: 0.9em; }
+        .quiz-container { background: white; border-radius: 20px; padding: 40px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); display: none; }
+        .quiz-header { text-align: center; margin-bottom: 30px; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 15px; }
+        .progress-container { margin-bottom: 30px; }
+        .progress-bar { background: #e1e5e9; border-radius: 25px; height: 10px; overflow: hidden; }
+        .progress-fill { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 100%; border-radius: 25px; transition: width 0.5s ease; position: relative; }
+        .progress-fill::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); animation: shimmer 2s infinite; }
+        @keyframes shimmer { 0% { transform: translateX(-100%);} 100% { transform: translateX(100%);} }
+        .stats-bar { display: flex; justify-content: space-between; margin-bottom: 20px; padding: 15px; background: rgba(102, 126, 234, 0.1); border-radius: 10px; }
+        .stat-item { text-align: center; }
+        .stat-number { font-size: 1.5em; font-weight: bold; color: #667eea; }
+        .stat-label { font-size: 0.9em; color: #666; }
+        .question-container { display: none; background: #f8f9fa; border-radius: 15px; padding: 30px; margin-bottom: 20px; }
+        .question-container.active { display: block; animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px);} to { opacity: 1; transform: translateY(0);} }
+        .question-text { font-size: 1.2em; margin-bottom: 25px; color: #333; font-weight: 500; }
+        .options-container { display: grid; gap: 15px; }
+        .option { background: white; border: 2px solid #e1e5e9; border-radius: 12px; padding: 15px 20px; cursor: pointer; transition: all 0.3s ease; position: relative; }
+        .option:hover { border-color: #667eea; background: #f0f4ff; transform: translateX(5px); }
+        .option.selected { border-color: #667eea; background: #667eea; color: white; }
+        .option.correct { border-color: #28a745; background: #28a745; color: white; animation: correctPulse 0.5s; }
+        .option.incorrect { border-color: #dc3545; background: #dc3545; color: white; animation: incorrectShake 0.5s; }
+        @keyframes correctPulse { 0% { transform: scale(1);} 50% { transform: scale(1.05);} 100% { transform: scale(1);} }
+        @keyframes incorrectShake { 0%, 100% { transform: translateX(0);} 25% { transform: translateX(-5px);} 75% { transform: translateX(5px);} }
+        .explanation { background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 15px; margin-top: 20px; display: none; }
+        .explanation.show { display: block; animation: slideDown 0.3s ease-out; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px);} to { opacity: 1; transform: translateY(0);} }
+        .controls { display: flex; justify-content: center; gap: 15px; margin-top: 30px; }
+        .btn { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 15px 30px; border-radius: 25px; font-size: 16px; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden; }
+        .btn::before { content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0; background: rgba(255,255,255,0.3); border-radius: 50%; transition: all 0.3s ease; transform: translate(-50%, -50%); }
+        .btn:hover::before { width: 300px; height: 300px; }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .btn.secondary { background: #6c757d; }
+        .btn.secondary:hover { background: #5a6268; }
+        .results { text-align: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 20px; padding: 40px; display: none; }
+        .results.show { display: block; animation: celebration 1s ease-in-out; }
+        @keyframes celebration { 0%, 100% { transform: scale(1);} 50% { transform: scale(1.05);} }
+        .score-display { font-size: 3em; margin: 20px 0; }
+        .performance-message { font-size: 1.2em; margin: 20px 0; }
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            header h1 { font-size: 2em; }
+            .category-grid { grid-template-columns: 1fr; }
+            .quiz-container, .category-selection { padding: 20px; }
+            .controls { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧠 Quiz Master</h1>
+            <p>Teste seus conhecimentos em diversas áreas do conhecimento</p>
+        </header>
+
+        <div class="category-selection" id="categorySelection">
+            <h2>Escolha sua Categoria</h2>
+            <p>Selecione a área de conhecimento que você deseja testar:</p>
+            <div class="category-grid">
+                <div class="category-card" onclick="selectCategory('infraestrutura')">
+                    <span class="category-icon">🖥️</span>
+                    <div class="category-title">Infraestrutura de TI</div>
+                    <div class="category-desc">Servidores, redes, virtualização, segurança e administração de sistemas</div>
+                </div>
+                <div class="category-card" onclick="selectCategory('redes')">
+                    <span class="category-icon">🌐</span>
+                    <div class="category-title">Redes e Conectividade</div>
+                    <div class="category-desc">Protocolos, topologias, equipamentos de rede e comunicação</div>
+                </div>
+                <div class="category-card" onclick="selectCategory('sistemas')">
+                    <span class="category-icon">💻</span>
+                    <div class="category-title">Sistemas Operacionais</div>
+                    <div class="category-desc">Linux, Windows, comandos, gerenciamento e configurações</div>
+                </div>
+                <div class="category-card" onclick="selectCategory('internet')">
+                    <span class="category-icon">🔍</span>
+                    <div class="category-title">Curiosidades da Internet</div>
+                    <div class="category-desc">História da web, protocolos, tecnologias e fatos interessantes</div>
+                </div>
+                <div class="category-card" onclick="selectCategory('filosofia')">
+                    <span class="category-icon">🤔</span>
+                    <div class="category-title">Filosofia e Pensadores</div>
+                    <div class="category-desc">Grandes filósofos, correntes de pensamento e conceitos filosóficos</div>
+                </div>
+                <div class="category-card" onclick="selectCategory('geral')">
+                    <span class="category-icon">🎯</span>
+                    <div class="category-title">Conhecimentos Gerais</div>
+                    <div class="category-desc">Mistura de todas as categorias para um desafio completo</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="quiz-container" id="quizContainer">
+            <div class="quiz-header">
+                <h2 id="categoryTitle">Infraestrutura de TI</h2>
+                <p id="categorySubtitle">Teste seus conhecimentos em infraestrutura tecnológica</p>
+            </div>
+
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <div class="stat-number" id="currentQuestionNum">1</div>
+                    <div class="stat-label">Pergunta</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="currentScore">0</div>
+                    <div class="stat-label">Acertos</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="totalQuestions">10</div>
+                    <div class="stat-label">Total</div>
+                </div>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressBar" style="width: 10%"></div>
+                </div>
+            </div>
+
+            <div id="questionsContainer"></div>
+
+            <div class="controls">
+                <button class="btn secondary" onclick="goBack()">⬅️ Voltar</button>
+                <button class="btn" id="nextBtn" onclick="nextQuestion()" disabled>Próxima ➡️</button>
+                <button class="btn" id="finishBtn" onclick="finishQuiz()" style="display: none;">🏁 Finalizar</button>
+            </div>
+        </div>
+
+        <div class="results" id="results">
+            <h2>🎉 Quiz Concluído!</h2>
+            <div class="score-display" id="finalScore"></div>
+            <div class="performance-message" id="performanceMessage"></div>
+            <div class="controls">
+                <button class="btn" onclick="restartQuiz()">🔄 Novo Quiz</button>
+                <button class="btn secondary" onclick="goToCategories()">📚 Escolher Categoria</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // Banco de perguntas (corrigido) — índices 'correct' coerentes e sem lixo de texto
+    const quizData = {
+      infraestrutura: {
+        title: 'Infraestrutura de TI',
+        subtitle: 'Teste seus conhecimentos em infraestrutura tecnológica',
+        questions: [
+          { question: 'Qual é a principal função de um hypervisor em virtualização?', options: ['Gerenciar o sistema de arquivos','Criar e gerenciar máquinas virtuais','Fazer backup dos dados','Monitorar a rede'], correct: 1, explanation: 'O hypervisor é o software responsável por criar, executar e gerenciar máquinas virtuais, permitindo que múltiplos sistemas operacionais funcionem em um mesmo hardware físico.' },
+          { question: 'O que significa RAID 5?', options: ['Espelhamento de discos','Concatenação de discos','Distribuição com paridade','Backup incremental'], correct: 2, explanation: 'RAID 5 distribui os dados e a paridade entre pelo menos 3 discos, oferecendo redundância e melhor performance de leitura, suportando a falha de um disco.' },
+          { question: 'Qual protocolo é mais utilizado para monitoramento de infraestrutura?', options: ['HTTP','SNMP','FTP','SMTP'], correct: 1, explanation: 'SNMP (Simple Network Management Protocol) é amplamente utilizado para monitorar e gerenciar dispositivos de rede e infraestrutura de TI.' },
+          { question: 'O que é um SLA em infraestrutura?', options: ['Sistema de backup','Acordo de nível de serviço','Protocolo de segurança','Tipo de servidor'], correct: 1, explanation: 'SLA (Service Level Agreement) é um acordo que define os níveis mínimos de serviço, incluindo disponibilidade, performance e tempo de resposta.' },
+          { question: 'Qual é a diferença entre backup incremental e diferencial?', options: ['Não há diferença','Incremental copia tudo, diferencial só mudanças','Incremental copia só mudanças desde último backup, diferencial desde último full','Diferencial é mais rápido'], correct: 2, explanation: 'Backup incremental copia apenas arquivos modificados desde o último backup (qualquer tipo), enquanto diferencial copia mudanças desde o último backup completo.' },
+          { question: 'O que caracteriza uma arquitetura de alta disponibilidade?', options: ['Maior velocidade de processamento','Redundância e eliminação de pontos únicos de falha','Menor consumo de energia','Interface mais amigável'], correct: 1, explanation: 'Alta disponibilidade foca na redundância de componentes críticos e eliminação de pontos únicos de falha para garantir funcionamento contínuo do sistema.' },
+          { question: 'Qual é o propósito principal de um Load Balancer?', options: ['Aumentar a segurança','Distribuir carga entre servidores','Fazer backup automático','Monitorar performance'], correct: 1, explanation: 'Load Balancer distribui requisições entre múltiplos servidores para otimizar utilização de recursos, melhorar performance e garantir disponibilidade.' },
+          { question: 'O que é vSphere da VMware?', options: ['Sistema operacional','Plataforma de virtualização','Banco de dados','Protocolo de rede'], correct: 1, explanation: 'vSphere é a plataforma de virtualização da VMware que inclui o hypervisor ESXi e ferramentas de gerenciamento como vCenter.' },
+          { question: 'Qual tecnologia permite criar redes isoladas em um mesmo switch físico?', options: ['NAT','VLAN','VPN','DNS'], correct: 1, explanation: 'VLAN (Virtual LAN) permite segmentar uma rede física em múltiplas redes lógicas isoladas, melhorando segurança e organização.' },
+          { question: 'O que é um Datacenter Tier 4?', options: ['Datacenter com 4 servidores','Classificação de disponibilidade mais alta','Datacenter de 4º geração','Datacenter com 4 andares'], correct: 1, explanation: 'Tier 4 é a classificação mais alta de datacenter, garantindo 99,995% de disponibilidade com redundância total e tolerância a falhas.' }
+        ]
+      },
+      redes: {
+        title: 'Redes e Cabeamento',
+        subtitle: 'Teste seus conhecimentos sobre cabeamento e conectividade',
+        questions: [
+          { question: 'Como o cabo UTP reduz interferências e crosstalk?', options: ['Usando blindagem metálica','Por cancelamento e variação de torções','Aumentando a espessura do cabo','Usando conectores especiais'], correct: 1, explanation: 'O UTP reduz interferências através do cancelamento (polaridades opostas) e variação do número de torções por pé em cada par de fios.' },
+          { question: 'Qual é a diferença principal entre cabo direto e cruzado?', options: ['Número de pares de fios','Padrão de terminação nas extremidades','Tipo de conector usado','Categoria do cabo'], correct: 1, explanation: 'Cabo direto usa o mesmo padrão (T568A ou T568B) nas duas extremidades, enquanto cruzado usa T568A em uma extremidade e T568B na outra.' },
+          { question: 'Qual é a estrutura básica de um cabo coaxial (de fora para dentro)?', options: ['Capa externa, isolamento, condutor interno','Capa externa, blindagem metálica, isolamento, condutor interno','Isolamento, blindagem, condutor interno','Capa externa, condutor interno, isolamento'], correct: 1, explanation: 'Cabo coaxial tem: capa externa (proteção), blindagem metálica (segundo fio/proteção), isolamento plástico e condutor interno (transmissão).' },
+          { question: 'Por que a fibra monomodo (SMF) alcança maiores distâncias que a multimodo (MMF)?', options: ['Usa mais potência','Tem menor dispersão do sinal','É mais barata','É mais fácil de instalar'], correct: 1, explanation: 'SMF tem menor dispersão (espalhamento do pulso de luz), permitindo transmissões em distâncias muito maiores que MMF (até ~100.000 m vs ~550 m).'},
+          { question: 'Quais conectores são mais comuns para fibra óptica?', options: ['RJ-45 e BNC','ST, SC e LC','USB e HDMI','Ethernet e Coaxial'], correct: 1, explanation: 'Os conectores mais comuns para fibra óptica são ST (Straight-Tip), SC (Subscriber Connector) e LC (Lucent Connector).' },
+          { question: 'Qual método de codificação é mencionado como exemplo na camada física?', options: ['ASCII','Manchester','UTF-8','Base64'], correct: 1, explanation: 'Manchester é um método de codificação da camada física que converte bits em padrões de sinais reconhecíveis, junto com 4B/5B e 8B/10B.' },
+          { question: 'Qual é uma aplicação comum do cabo coaxial atualmente?', options: ['Redes locais corporativas','Instalações wireless (antenas) e internet a cabo','Conexões entre switches','Cabeamento estruturado de prédios'], correct: 1, explanation: 'Cabo coaxial é usado principalmente em instalações wireless (conectando antenas) e instalações de internet a cabo para clientes residenciais.' },
+          { question: 'Qual é a largura de banda máxima suportada por cabeamento de fibra óptica?', options: ['10 Gbps','100 Gbps','1 Tbps','10 Tbps'], correct: 1, explanation: 'Para fins de comparação didática, considere até 100 Gbps em padrões comuns; novas gerações alcançam mais em contextos específicos.' },
+          { question: 'Quais dispositivos são necessários para uma WLAN básica?', options: ['Apenas roteadores wireless','Access Point e adaptadores NIC sem fio','Switches e cabos UTP','Servidores DHCP e DNS'], correct: 1, explanation: 'Uma WLAN requer Access Point (concentra sinais wireless) e adaptadores de NIC sem fio (fornecem capacidade wireless aos hosts).' },
+          { question: 'Qual padrão IEEE é usado para Bluetooth?', options: ['IEEE 802.11','IEEE 802.15','IEEE 802.16','IEEE 802.3'], correct: 1, explanation: 'Bluetooth usa o padrão IEEE 802.15, sendo uma tecnologia WPAN (Wireless Personal Area Network) para comunicações de curta distância.' }
+        ]
+      },
+      sistemas: {
+        title: 'Sistemas Operacionais',
+        subtitle: 'Linux, Windows e administração de sistemas',
+        questions: [
+          { question: 'Qual comando lista arquivos e diretórios no Linux?', options: ['dir','list','ls','show'], correct: 2, explanation: "O comando 'ls' (list) é usado no Linux/Unix para listar arquivos e diretórios. No Windows, o equivalente é 'dir'." },
+          { question: 'O que é o kernel de um sistema operacional?', options: ['Interface gráfica','Núcleo do sistema que gerencia recursos','Aplicativo do usuário','Sistema de arquivos'], correct: 1, explanation: 'O kernel é o núcleo do sistema operacional, responsável por gerenciar hardware, memória, processos e comunicação entre software e hardware.' },
+          { question: 'Qual é a diferença entre processo e thread?', options: ['São a mesma coisa','Processo é menor que thread','Thread compartilha memória do processo','Thread é independente do processo'], correct: 2, explanation: 'Threads são unidades de execução dentro de um processo que compartilham o mesmo espaço de memória, permitindo execução paralela mais eficiente.' },
+          { question: 'No Linux, o que representa o diretório /etc?', options: ['Arquivos executáveis','Arquivos de configuração do sistema','Arquivos temporários','Arquivos de usuário'], correct: 1, explanation: 'O diretório /etc contém arquivos de configuração do sistema e aplicativos, essenciais para o funcionamento do Linux.' },
+          { question: 'Qual comando no Linux altera permissões de arquivos?', options: ['chown','chmod','chgrp','change'], correct: 1, explanation: "O comando 'chmod' (change mode) altera as permissões de leitura, escrita e execução de arquivos e diretórios no Linux." },
+          { question: 'O que é swap no Linux?', options: ['Comando para trocar usuários','Espaço de memória virtual em disco','Tipo de partição de dados','Protocolo de rede'], correct: 1, explanation: 'Swap é um espaço em disco usado como extensão da RAM, permitindo que o sistema continue funcionando quando a memória física se esgota.' },
+          { question: 'No Windows, o que é o Registry?', options: ['Sistema de arquivos','Banco de dados de configurações','Aplicativo de registro','Protocolo de segurança'], correct: 1, explanation: 'O Registry é um banco de dados hierárquico que armazena configurações do sistema e de aplicativos no Windows.' },
+          { question: 'Qual comando exibe o diretório atual no Linux?', options: ['pwd','where','home','cd'], correct: 0, explanation: "'pwd' (print working directory) exibe o caminho do diretório atual." },
+          { question: 'Qual permissão em Linux permite executar um arquivo?', options: ['r','w','x','rw'], correct: 2, explanation: "A permissão 'x' (execute) permite executar arquivos ou entrar em diretórios." },
+          { question: 'Qual arquivo no Linux tipicamente contém contas de usuários?', options: ['/etc/users','/etc/passwd','/etc/accounts','/etc/userdb'], correct: 1, explanation: "'/etc/passwd' lista contas de usuários e informações básicas." }
+        ]
+      },
+      // As categorias abaixo são placeholders. Você pode preenchê-las depois.
+      internet: { title: 'Curiosidades da Internet', subtitle: 'História, protocolos e tecnologias web', questions: [] },
+      filosofia: { title: 'Filosofia e Pensadores', subtitle: 'Grandes filósofos e conceitos', questions: [] },
+      geral: { title: 'Conhecimentos Gerais', subtitle: 'Mistura de todas as categorias', questions: [] }
+    };
+
+    // Estado do app
+    let currentCategoryKey = null;
+    let currentIndex = 0;
+    let score = 0;
+
+    // Utilidades
+    function $(id) { return document.getElementById(id); }
+
+    function selectCategory(key) {
+      const cat = quizData[key];
+      if (!cat || !Array.isArray(cat.questions) || cat.questions.length === 0) {
+        alert('Categoria sem perguntas no momento. Selecione outra.');
+        return;
+      }
+      currentCategoryKey = key;
+      currentIndex = 0;
+      score = 0;
+
+      $('categorySelection').style.display = 'none';
+      $('quizContainer').style.display = 'block';
+      $('results').classList.remove('show');
+      $('results').style.display = 'none';
+
+      $('categoryTitle').textContent = cat.title;
+      $('categorySubtitle').textContent = cat.subtitle;
+      $('currentQuestionNum').textContent = 1;
+      $('currentScore').textContent = 0;
+      $('totalQuestions').textContent = cat.questions.length;
+
+      updateProgress();
+      renderQuestions();
+      updateControls();
+    }
+
+    function renderQuestions() {
+      const container = $('questionsContainer');
+      container.innerHTML = '';
+      const { questions } = quizData[currentCategoryKey];
+
+      questions.forEach((q, i) => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'question-container' + (i === currentIndex ? ' active' : '');
+        wrapper.setAttribute('data-index', i);
+
+        const qEl = document.createElement('div');
+        qEl.className = 'question-text';
+        qEl.textContent = q.question;
+
+        const optionsEl = document.createElement('div');
+        optionsEl.className = 'options-container';
+
+        q.options.forEach((opt, idx) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'option';
+          btn.textContent = opt;
+          btn.addEventListener('click', () => selectOption(i, idx));
+          optionsEl.appendChild(btn);
+        });
+
+        const expl = document.createElement('div');
+        expl.className = 'explanation';
+        expl.id = `explanation-${i}`;
+        expl.textContent = q.explanation || '';
+
+        wrapper.appendChild(qEl);
+        wrapper.appendChild(optionsEl);
+        wrapper.appendChild(expl);
+        container.appendChild(wrapper);
+      });
+    }
+
+    function selectOption(questionIdx, optionIdx) {
+      if (questionIdx !== currentIndex) return; // evita clicar em outras perguntas
+
+      const { questions } = quizData[currentCategoryKey];
+      const q = questions[questionIdx];
+      const container = document.querySelector(`.question-container[data-index="${questionIdx}"]`);
+      const optionButtons = container.querySelectorAll('.option');
+
+      // evita múltiplas seleções
+      if ([...optionButtons].some(b => b.classList.contains('correct') || b.classList.contains('incorrect'))) return;
+
+      optionButtons.forEach((btn, idx) => {
+        if (idx === q.correct) {
+          btn.classList.add('correct');
+        }
+        if (idx === optionIdx && idx !== q.correct) {
+          btn.classList.add('incorrect');
+        }
+        btn.disabled = true;
+      });
+
+      // pontuação
+      if (optionIdx === q.correct) {
+        score += 1;
+        $('currentScore').textContent = score;
+      }
+
+      // mostrar explicação
+      const expl = $(`explanation-${questionIdx}`);
+      if (expl && q.explanation) expl.classList.add('show');
+
+      // habilitar próximo/finalizar
+      updateControls();
+    }
+
+    function nextQuestion() {
+      const { questions } = quizData[currentCategoryKey];
+      if (currentIndex < questions.length - 1) {
+        currentIndex += 1;
+        swapActiveQuestion();
+        $('currentQuestionNum').textContent = currentIndex + 1;
+        updateProgress();
+      }
+      updateControls();
+    }
+
+    function swapActiveQuestion() {
+      document.querySelectorAll('.question-container').forEach((el, i) => {
+        if (i === currentIndex) el.classList.add('active'); else el.classList.remove('active');
+      });
+      // desabilita botão Próxima até o usuário responder
+      $('nextBtn').disabled = true;
+    }
+
+    function updateProgress() {
+      const total = quizData[currentCategoryKey].questions.length;
+      const pct = ((currentIndex + 1) / total) * 100;
+      $('progressBar').style.width = pct + '%';
+    }
+
+    function updateControls() {
+      const total = quizData[currentCategoryKey].questions.length;
+      const container = document.querySelector(`.question-container[data-index="${currentIndex}"]`);
+      const answered = container && [...container.querySelectorAll('.option')].some(b => b.classList.contains('correct') || b.classList.contains('incorrect'));
+      $('nextBtn').style.display = currentIndex < total - 1 ? 'inline-block' : 'none';
+      $('finishBtn').style.display = currentIndex === total - 1 ? 'inline-block' : 'none';
+      $('nextBtn').disabled = !answered;
+    }
+
+    function finishQuiz() {
+      $('quizContainer').style.display = 'none';
+      const total = quizData[currentCategoryKey].questions.length;
+      const percent = Math.round((score / total) * 100);
+      $('finalScore').textContent = `Você acertou ${score} de ${total} (${percent}%).`;
+      let msg = 'Bom trabalho! Continue praticando para melhorar ainda mais.';
+      if (percent === 100) msg = 'Perfeito! Excelente domínio do conteúdo!';
+      else if (percent >= 80) msg = 'Ótimo desempenho! Só mais um pouco para a perfeição.';
+      else if (percent >= 60) msg = 'Você foi bem! Vale revisar alguns pontos.';
+      else msg = 'Tudo bem! Use o resultado para orientar seus estudos.';
+      $('performanceMessage').textContent = msg;
+      $('results').style.display = 'block';
+      $('results').classList.add('show');
+    }
+
+    function goBack() {
+      // volta para seleção de categorias
+      $('quizContainer').style.display = 'none';
+      $('results').style.display = 'none';
+      $('categorySelection').style.display = 'block';
+    }
+
+    function restartQuiz() {
+      // reinicia mesma categoria
+      if (!currentCategoryKey) return;
+      selectCategory(currentCategoryKey);
+    }
+
+    function goToCategories() {
+      goBack();
+    }
+
+    // Habilitar botão Próxima somente após resposta
+    document.addEventListener('click', (e) => {
+      if (e.target && e.target.classList.contains('option')) {
+        // depois que usuário responde, o updateControls será chamado dentro de selectOption
+        // mas se clicar em uma já marcada, ignore
+        const parent = e.target.closest('.question-container');
+        if (!parent) return;
+        const answered = [...parent.querySelectorAll('.option')].some(b => b.classList.contains('correct') || b.classList.contains('incorrect'));
+        if (answered) $('nextBtn').disabled = false;
+      }
+    });
+    </script>
+</body>
+</html>
