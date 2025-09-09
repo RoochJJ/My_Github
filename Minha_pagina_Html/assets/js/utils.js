@@ -1,8 +1,7 @@
-// ============================================
+
 // FUNÇÕES UTILITÁRIAS
 // ============================================
 
-// ============================================
 // MANIPULAÇÃO DE ARRAYS
 // ============================================
 
@@ -30,8 +29,6 @@ function getRandomElements(array, count) {
     const shuffled = shuffleArray(array);
     return shuffled.slice(0, count);
 }
-
-// ============================================
 // FORMATAÇÃO DE DADOS
 // ============================================
 
@@ -76,7 +73,6 @@ function formatDate(date) {
     });
 }
 
-// ============================================
 // VALIDAÇÃO DE DADOS
 // ============================================
 
@@ -124,7 +120,6 @@ function validateQuestion(question) {
     return true;
 }
 
-// ============================================
 // MANIPULAÇÃO DO DOM
 // ============================================
 
@@ -178,7 +173,6 @@ function addDebouncedClickEvent(element, callback, delay = 300) {
     });
 }
 
-// ============================================
 // ANIMAÇÕES E EFEITOS
 // ============================================
 
@@ -224,7 +218,6 @@ function shakeElement(element, duration = 500) {
     }, duration);
 }
 
-// ============================================
 // UTILITÁRIOS DE PERFORMANCE
 // ============================================
 
@@ -265,7 +258,6 @@ function throttle(func, limit) {
     };
 }
 
-// ============================================
 // UTILITÁRIOS DE STORAGE
 // ============================================
 
@@ -301,7 +293,7 @@ function loadFromSession(key, defaultValue = null) {
     }
 }
 
-// ============================================
+
 // UTILITÁRIOS DE LOGGING
 // ============================================
 
@@ -326,7 +318,6 @@ const Logger = {
     }
 };
 
-// ============================================
 // UTILITÁRIOS MATEMÁTICOS
 // ============================================
 
@@ -359,7 +350,7 @@ function roundTo(num, decimals) {
     return Number(Math.round(num + 'e' + decimals) + 'e-' + decimals);
 }
 
-// ============================================
+
 // UTILITÁRIOS DE URL E NAVEGAÇÃO
 // ============================================
 
@@ -384,7 +375,6 @@ function updateURLParameter(key, value) {
     window.history.pushState({}, '', url);
 }
 
-// ============================================
 // UTILITÁRIOS DE DETECÇÃO DE DISPOSITIVO
 // ============================================
 
@@ -412,7 +402,6 @@ function isDesktop() {
     return !isMobile() && !isTablet();
 }
 
-// ============================================
 // UTILITÁRIOS DE ACESSIBILIDADE
 // ============================================
 
@@ -455,7 +444,7 @@ function announceToScreenReader(message) {
     }, 1000);
 }
 
-// ============================================
+
 // UTILITÁRIOS DE CORES
 // ============================================
 
@@ -488,7 +477,7 @@ function getLuminance(r, g, b) {
     return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
 }
 
-// ============================================
+
 // UTILITÁRIOS DE EXPORTAÇÃO DE DADOS
 // ============================================
 
@@ -537,7 +526,7 @@ function downloadFile(content, filename, contentType = 'text/plain') {
     window.URL.revokeObjectURL(url);
 }
 
-// ============================================
+
 // UTILITÁRIOS DE CONFIGURAÇÃO
 // ============================================
 
@@ -575,7 +564,7 @@ const QuizConfig = {
     }
 };
 
-// ============================================
+
 // INICIALIZAÇÃO DAS ANIMAÇÕES CSS
 // ============================================
 
@@ -623,7 +612,7 @@ function initializeDynamicStyles() {
     document.head.appendChild(style);
 }
 
-// ============================================
+
 // EXPORTAÇÃO GLOBAL
 // ============================================
 
