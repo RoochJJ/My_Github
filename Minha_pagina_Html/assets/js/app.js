@@ -1,4 +1,4 @@
-// ============================================
+
 // QUIZ MASTER - LÓGICA PRINCIPAL
 // ============================================
 
@@ -10,7 +10,7 @@ let answered = false;
 let totalQuestions = 0;
 let questions = [];
 
-// ============================================
+
 // INICIALIZAÇÃO
 // ============================================
 document.addEventListener('DOMContentLoaded', function() {
@@ -43,7 +43,7 @@ function setupGlobalEventListeners() {
     });
 }
 
-// ============================================
+
 // SELEÇÃO DE CATEGORIA
 // ============================================
 function selectCategory(category) {
@@ -86,7 +86,7 @@ function setupQuizInterface() {
     showQuestion(0);
 }
 
-// ============================================
+
 // GERAÇÃO DE PERGUNTAS
 // ============================================
 function generateQuestionsHTML() {
@@ -124,7 +124,7 @@ function createQuestionElement(questionData, index) {
     return questionDiv;
 }
 
-// ============================================
+
 // NAVEGAÇÃO DE PERGUNTAS
 // ============================================
 function showQuestion(index) {
@@ -161,7 +161,7 @@ function previousQuestion() {
     }
 }
 
-// ============================================
+
 // SELEÇÃO DE OPÇÕES
 // ============================================
 function selectOption(questionIndex, optionIndex) {
@@ -209,7 +209,6 @@ function selectOption(questionIndex, optionIndex) {
     console.log(`Pergunta ${questionIndex + 1}: ${isCorrect ? 'Correta' : 'Incorreta'}`);
 }
 
-// ============================================
 // CONTROLE DE INTERFACE
 // ============================================
 function showCategorySelection() {
@@ -230,7 +229,7 @@ function showResults() {
     document.getElementById('results').classList.add('show');
 }
 
-// ============================================
+
 // ATUALIZAÇÃO DA INTERFACE
 // ============================================
 function updateQuizStats() {
@@ -262,7 +261,7 @@ function updateNavigationButtons() {
     }
 }
 
-// ============================================
+
 // FINALIZAÇÃO DO QUIZ
 // ============================================
 function finishQuiz() {
@@ -317,7 +316,7 @@ function saveQuizResults() {
     sessionStorage.setItem('quizResults', JSON.stringify(savedResults));
 }
 
-// ============================================
+
 // REINICIALIZAÇÃO E NAVEGAÇÃO
 // ============================================
 function restartQuiz() {
@@ -348,7 +347,7 @@ function resetQuizState() {
     questions = [];
 }
 
-// ============================================
+
 // ANIMAÇÕES E FEEDBACK
 // ============================================
 function playSuccessAnimation() {
@@ -385,7 +384,7 @@ function playErrorAnimation() {
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        background: #dc3545;
+        background: #f25f6eff;
         color: white;
         padding: 10px 20px;
         border-radius: 25px;
@@ -401,7 +400,7 @@ function playErrorAnimation() {
     }, 1000);
 }
 
-// ============================================
+
 // TRATAMENTO DE ERROS
 // ============================================
 function showError(message) {
@@ -409,7 +408,7 @@ function showError(message) {
     console.error('Quiz Error:', message);
 }
 
-// ============================================
+
 // EXPORTAÇÃO DE FUNÇÕES GLOBAIS
 // ============================================
 window.selectCategory = selectCategory;
