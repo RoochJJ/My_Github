@@ -350,7 +350,7 @@ function roundTo(num, decimals) {
     return Number(Math.round(num + 'e' + decimals) + 'e-' + decimals);
 }
 
-// ============================================
+
 // UTILITÁRIOS DE URL E NAVEGAÇÃO
 // ============================================
 
