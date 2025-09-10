@@ -1,0 +1,275 @@
+/* ============================================
+   RESPONSIVIDADE - MEDIA QUERIES
+   ============================================ */
+
+/* ============================================
+   TABLETS - 768px e abaixo
+   ============================================ */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    header h1 {
+        font-size: 2.5em;
+    }
+    
+    header p {
+        font-size: 1em;
+    }
+    
+    .category-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .category-card {
+        padding: 25px;
+    }
+    
+    .category-icon {
+        font-size: 2.5em;
+    }
+    
+    .category-title {
+        font-size: 1.2em;
+    }
+    
+    .quiz-container, 
+    .category-selection {
+        padding: 25px;
+    }
+    
+    .quiz-header {
+        padding: 15px;
+    }
+    
+    .stats-bar {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    
+    .question-text {
+        font-size: 1.1em;
+    }
+    
+    .controls {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btn {
+        width: 200px;
+        margin: 5px 0;
+    }
+    
+    .score-display {
+        font-size: 2.5em;
+    }
+    
+    .performance-message {
+        font-size: 1.1em;
+    }
+}
+
+/* ============================================
+   SMARTPHONES - 480px e abaixo
+   ============================================ */
+@media (max-width: 480px) {
+    .container {
+        padding: 5px;
+    }
+    
+    header {
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    
+    header h1 {
+        font-size: 2em;
+    }
+    
+    header p {
+        font-size: 0.9em;
+    }
+    
+    .category-selection,
+    .quiz-container {
+        padding: 20px;
+        border-radius: 15px;
+    }
+    
+    .category-card {
+        padding: 20px;
+    }
+    
+    .category-icon {
+        font-size: 2em;
+    }
+    
+    .category-title {
+        font-size: 1.1em;
+    }
+    
+    .category-desc {
+        font-size: 0.8em;
+    }
+    
+    .quiz-header h2 {
+        font-size: 1.3em;
+    }
+    
+    .quiz-header p {
+        font-size: 0.9em;
+    }
+    
+    .stat-number {
+        font-size: 1.3em;
+    }
+    
+    .stat-label {
+        font-size: 0.8em;
+    }
+    
+    .question-container {
+        padding: 20px;
+    }
+    
+    .question-text {
+        font-size: 1em;
+    }
+    
+    .option {
+        padding: 12px 15px;
+        font-size: 0.9em;
+    }
+    
+    .btn {
+        padding: 12px 20px;
+        font-size: 14px;
+        width: 180px;
+    }
+    
+    .results {
+        padding: 30px 20px;
+    }
+    
+    .score-display {
+        font-size: 2em;
+    }
+    
+    .performance-message {
+        font-size: 1em;
+    }
+}
+
+/* ============================================
+   TELAS GRANDES - 1200px e acima
+   ============================================ */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1400px;
+        padding: 30px;
+    }
+    
+    header h1 {
+        font-size: 3.5em;
+    }
+    
+    .category-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+    }
+    
+    .category-card {
+        padding: 35px;
+    }
+    
+    .quiz-container {
+        padding: 50px;
+    }
+    
+    .question-text {
+        font-size: 1.3em;
+    }
+    
+    .option {
+        padding: 18px 25px;
+        font-size: 1em;
+    }
+}
+
+/* ============================================
+   ORIENTAÇÃO PAISAGEM EM DISPOSITIVOS MÓVEIS
+   ============================================ */
+@media (max-height: 600px) and (orientation: landscape) {
+    header {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+    
+    header h1 {
+        font-size: 2em;
+    }
+    
+    .category-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+    }
+    
+    .category-card {
+        padding: 20px;
+    }
+    
+    .quiz-container {
+        padding: 25px;
+    }
+    
+    .question-container {
+        padding: 20px;
+    }
+}
+
+/* ============================================
+   IMPRESSÃO
+   ============================================ */
+@media print {
+    body {
+        background: white !important;
+    }
+    
+    .container {
+        max-width: 100%;
+        padding: 0;
+    }
+    
+    .quiz-container,
+    .category-selection {
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+    
+    .btn {
+        display: none;
+    }
+    
+    .controls {
+        display: none;
+    }
+    
+    .progress-bar {
+        display: none;
+    }
+}
+
+/* ============================================
+   ALTA RESOLUÇÃO - TELAS RETINA
+   ============================================ */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    /* Otimizações para telas de alta resolução */
+    .category-icon {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}

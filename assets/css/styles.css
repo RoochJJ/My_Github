@@ -1,0 +1,172 @@
+/* ============================================
+   QUIZ MASTER - ESTILOS PRINCIPAIS
+   ============================================ */
+
+/* Reset e configurações básicas */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
+header {
+    text-align: center;
+    margin-bottom: 40px;
+    color: white;
+    padding: 30px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+}
+
+header h1 {
+    font-size: 3em;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+header p {
+    font-size: 1.2em;
+    opacity: 0.9;
+}
+
+/* ============================================
+   BOTÕES
+   ============================================ */
+.btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    margin: 0 5px;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255,255,255,0.3);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    transform: translate(-50%, -50%);
+}
+
+.btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn:disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.btn.secondary {
+    background: #6c757d;
+}
+
+.btn.secondary:hover {
+    background: #5a6268;
+}
+
+/* ============================================
+   ANIMAÇÕES GLOBAIS
+   ============================================ */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+@keyframes celebration {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* ============================================
+   UTILITÁRIOS
+   ============================================ */
+.text-center {
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+
+.show {
+    display: block;
+    animation: fadeIn 0.5s ease-in;
+}
+
+/* ============================================
+   CORES E VARIÁVEIS
+   ============================================ */
+:root {
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --secondary-color: #6c757d;
+    --success-color: #28a745;
+    --error-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #17a2b8;
+    --light-gray: #f8f9fa;
+    --medium-gray: #e9ecef;
+    --border-color: #e1e5e9;
+    --text-color: #333;
+    --shadow-light: 0 5px 15px rgba(0,0,0,0.1);
+    --shadow-medium: 0 10px 25px rgba(0,0,0,0.2);
+    --shadow-heavy: 0 20px 40px rgba(0,0,0,0.1);
+}
