@@ -4,9 +4,10 @@
 
 const quizData = {
     infraestrutura: {
-        title: "Infraestrutura de TI - Camada Física",
-        subtitle: "Teste seus conhecimentos sobre fundamentos de redes e infraestrutura",
+        title: "Infraestrutura de TI - Redes e Sistemas",
+        subtitle: "Teste seus conhecimentos sobre fundamentos de redes, protocolos e infraestrutura",
         questions: [
+            // Camada Física
             {
                 question: "Qual é a principal função da Camada Física no modelo de redes?",
                 options: [
@@ -40,82 +41,287 @@ const quizData = {
                 correct: 1,
                 explanation: "Goodput = Throughput - sobrecarga de tráfego. Goodput mede apenas os dados úteis transferidos, excluindo headers e overhead."
             },
+            // Camada de Enlace de Dados
             {
-                question: "Qual é a principal vantagem do cabo STP sobre o UTP?",
+                question: "Qual é a principal função da camada de enlace de dados?",
                 options: [
-                    "Maior velocidade de transmissão",
-                    "Melhor proteção contra interferências EMI/RFI",
-                    "Menor custo de instalação",
-                    "Facilidade de manuseio"
+                    "Roteamento entre redes diferentes",
+                    "Comunicações entre placas de interface de rede do dispositivo final",
+                    "Controle de sessão entre aplicações",
+                    "Criptografia de dados"
                 ],
                 correct: 1,
-                explanation: "STP (Shielded Twisted Pair) oferece melhor proteção contra interferências eletromagnéticas devido à sua blindagem metálica."
+                explanation: "A camada de enlace de dados é responsável pelas comunicações entre NICs dos dispositivos finais e encapsula pacotes da Camada 3 em Frames da Camada 2."
             },
             {
-                question: "Quantos pares de fios possui um cabo UTP padrão?",
+                question: "Quais são as duas subcamadas da Camada de Link de Dados IEEE 802?",
                 options: [
-                    "2 pares",
-                    "4 pares",
-                    "6 pares",
-                    "8 pares"
+                    "Physical e Data Link",
+                    "LLC (Logical Link Control) e MAC (Media Access Control)",
+                    "Network e Transport",
+                    "Session e Presentation"
                 ],
                 correct: 1,
-                explanation: "O cabo UTP possui 4 pares de fios de cobre com código de cores, torcidos juntos para reduzir interferências e crosstalk."
+                explanation: "LLC se comunica entre software de rede e hardware do dispositivo, enquanto MAC é responsável pelo encapsulamento de dados e controle de acesso à mídia."
             },
             {
-                question: "Qual é a distância máxima recomendada para cabos de fibra multimodo (MMF)?",
+                question: "O que significa CSMA/CD e onde é usado?",
                 options: [
-                    "100 metros",
-                    "550 metros",
-                    "1000 metros",
-                    "10000 metros"
+                    "Controle de acesso em redes wireless",
+                    "Detecção de colisão em LANs Ethernet half-duplex",
+                    "Protocolo de roteamento dinâmico",
+                    "Método de criptografia de dados"
                 ],
                 correct: 1,
-                explanation: "A fibra multimodo tem uma distância máxima de 550 metros devido à maior dispersão comparada à fibra monomodo."
+                explanation: "CSMA/CD (Carrier Sense Multiple Access with Collision Detection) é usado em LANs Ethernet legacy para detectar e gerenciar colisões em meio compartilhado half-duplex."
             },
             {
-                question: "Qual conector é mais comumente usado com cabos UTP?",
+                question: "Qual a diferença entre CSMA/CD e CSMA/CA?",
                 options: [
-                    "BNC",
-                    "RJ-45",
-                    "SC",
-                    "ST"
+                    "São protocolos idênticos",
+                    "CSMA/CD detecta colisões, CSMA/CA previne colisões",
+                    "CSMA/CA é mais rápido que CSMA/CD",
+                    "CSMA/CD é para wireless, CSMA/CA para cabeado"
                 ],
                 correct: 1,
-                explanation: "O conector RJ-45 é o padrão para terminação de cabos UTP em redes Ethernet."
+                explanation: "CSMA/CD detecta colisões após ocorrerem (Ethernet), enquanto CSMA/CA previne colisões antes que aconteçam (WLANs 802.11)."
+            },
+            // Comutação Ethernet
+            {
+                question: "Qual é o tamanho mínimo e máximo de um quadro Ethernet?",
+                options: [
+                    "32 bytes mínimo, 1024 bytes máximo",
+                    "64 bytes mínimo, 1518 bytes máximo",
+                    "128 bytes mínimo, 2048 bytes máximo",
+                    "256 bytes mínimo, 4096 bytes máximo"
+                ],
+                correct: 1,
+                explanation: "Quadros Ethernet têm tamanho mínimo de 64 bytes e máximo de 1518 bytes. Quadros menores são fragmentos de colisão e maiores são considerados jumbo frames."
             },
             {
-                question: "Qual é a principal limitação das redes wireless (WLANs)?",
+                question: "Como um switch Ethernet aprende endereços MAC?",
                 options: [
-                    "Alto custo de implementação",
-                    "Operam em half-duplex (um dispositivo por vez)",
-                    "Incompatibilidade com dispositivos móveis",
-                    "Necessitam de cabos especiais"
+                    "Configuração manual dos endereços",
+                    "Examinando o endereço MAC de origem dos quadros recebidos",
+                    "Protocolo DHCP fornece os endereços",
+                    "DNS resolve nomes para endereços MAC"
                 ],
                 correct: 1,
-                explanation: "WLANs operam em half-duplex, significando que apenas um dispositivo pode transmitir por vez, reduzindo a largura de banda quando há muitos usuários."
+                explanation: "O switch examina o endereço MAC de origem de cada quadro recebido e associa com a porta de entrada, construindo dinamicamente sua tabela de endereços MAC."
             },
             {
-                question: "Qual padrão IEEE é usado para redes Wi-Fi?",
+                question: "O que acontece quando um switch recebe um quadro com endereço MAC de destino desconhecido?",
                 options: [
-                    "IEEE 802.3",
-                    "IEEE 802.11",
-                    "IEEE 802.15",
-                    "IEEE 802.16"
+                    "Descarta o quadro imediatamente",
+                    "Encaminha o quadro por todas as portas exceto a de entrada (flood)",
+                    "Envia uma mensagem de erro",
+                    "Armazena o quadro até descobrir a porta correta"
                 ],
                 correct: 1,
-                explanation: "IEEE 802.11 é o padrão para tecnologia LAN sem fio (WLAN), conhecido comercialmente como Wi-Fi."
+                explanation: "Quando o endereço MAC de destino não está na tabela, o switch faz flooding (unicast desconhecido), enviando o quadro por todas as portas exceto a de entrada."
             },
             {
-                question: "Qual é a vantagem da fibra óptica sobre o cabeamento de cobre em longas distâncias?",
+                question: "Qual é a diferença entre switching store-and-forward e cut-through?",
                 options: [
-                    "Menor custo de instalação",
-                    "Imunidade total a interferências eletromagnéticas",
-                    "Facilidade de manuseio",
-                    "Compatibilidade com equipamentos antigos"
+                    "Store-and-forward é mais rápido",
+                    "Store-and-forward recebe o quadro completo e verifica CRC, cut-through encaminha após ler o endereço destino",
+                    "Cut-through verifica erros, store-and-forward não",
+                    "São métodos idênticos"
                 ],
                 correct: 1,
-                explanation: "A fibra óptica é completamente imune a interferências eletromagnéticas (EMI/RFI) e tem muito menor atenuação, permitindo transmissões em longas distâncias."
+                explanation: "Store-and-forward recebe o quadro inteiro e calcula CRC antes de encaminhar. Cut-through encaminha assim que lê o endereço de destino, oferecendo menor latência mas sem verificação de erros."
+            },
+            {
+                question: "Por que as portas Gigabit Ethernet operam apenas em full-duplex?",
+                options: [
+                    "Para economizar energia",
+                    "Para eliminar colisões e maximizar performance",
+                    "Por limitações de hardware",
+                    "Para simplificar a configuração"
+                ],
+                correct: 1,
+                explanation: "Gigabit Ethernet opera apenas em full-duplex para eliminar colisões, maximizar a utilização da largura de banda e não precisar do protocolo CSMA/CD."
+            },
+            // Endereçamento IPv4/IPv6
+            {
+                question: "Quantos bits possui um endereço IPv4 e como é dividido?",
+                options: [
+                    "16 bits divididos em 2 octetos",
+                    "32 bits divididos em 4 octetos de 8 bits cada",
+                    "64 bits divididos em 8 octetos",
+                    "128 bits divididos em 16 octetos"
+                ],
+                correct: 1,
+                explanation: "Um endereço IPv4 possui 32 bits, dividido em 4 octetos de 8 bits cada, representados em notação decimal pontilhada (ex: 192.168.1.1)."
+            },
+            {
+                question: "Quantos bits possui um endereço IPv6 e como é representado?",
+                options: [
+                    "64 bits em notação decimal",
+                    "128 bits em notação hexadecimal",
+                    "256 bits em notação binária",
+                    "96 bits em notação octal"
+                ],
+                correct: 1,
+                explanation: "IPv6 possui 128 bits, representado em notação hexadecimal dividido em 8 grupos de 4 dígitos separados por dois pontos (ex: 2001:db8::1)."
+            },
+            {
+                question: "No IPv6, o que significam as notações de endereço Unicast, Multicast e Anycast?",
+                options: [
+                    "Tipos de protocolos diferentes",
+                    "Unicast (um para um), Multicast (um para muitos), Anycast (um para o mais próximo de muitos)",
+                    "Métodos de criptografia",
+                    "Velocidades de transmissão"
+                ],
+                correct: 1,
+                explanation: "Unicast identifica uma interface individual, Multicast identifica um grupo de interfaces, e Anycast identifica o mais próximo de um grupo de interfaces."
+            },
+            // Configuração e IOS
+            {
+                question: "Qual é a diferença entre os modos EXEC usuário e EXEC privilegiado no Cisco IOS?",
+                options: [
+                    "Não há diferença entre eles",
+                    "EXEC usuário (>) permite comandos básicos, EXEC privilegiado (#) permite todos os comandos",
+                    "EXEC privilegiado é mais lento",
+                    "EXEC usuário é para administradores"
+                ],
+                correct: 1,
+                explanation: "EXEC usuário (prompt >) permite apenas comandos básicos de monitoramento, enquanto EXEC privilegiado (prompt #) permite acesso a todos os comandos e recursos."
+            },
+            {
+                question: "Qual comando é usado para salvar a configuração em execução para a startup-config?",
+                options: [
+                    "save config",
+                    "copy running-config startup-config",
+                    "write memory",
+                    "backup configuration"
+                ],
+                correct: 1,
+                explanation: "O comando 'copy running-config startup-config' salva as alterações da configuração ativa (RAM) para o arquivo de configuração de inicialização (NVRAM)."
+            },
+            {
+                question: "Onde ficam armazenados os arquivos running-config e startup-config?",
+                options: [
+                    "Ambos na NVRAM",
+                    "Running-config na RAM, startup-config na NVRAM",
+                    "Ambos na Flash",
+                    "Running-config na NVRAM, startup-config na RAM"
+                ],
+                correct: 1,
+                explanation: "Running-config fica na RAM (volátil, perdido ao reiniciar) e startup-config fica na NVRAM (não-volátil, mantido após reinicialização)."
+            },
+            // Topologias e Definições de Rede
+            {
+                question: "Qual é a diferença entre topologia física e topologia lógica?",
+                options: [
+                    "São conceitos idênticos",
+                    "Física mostra conexões reais, lógica mostra conexões virtuais e endereçamento",
+                    "Lógica é mais importante que física",
+                    "Física é apenas para documentação"
+                ],
+                correct: 1,
+                explanation: "Topologia física mostra as conexões físicas e localização dos dispositivos, enquanto topologia lógica mostra as conexões virtuais usando interfaces e esquemas de endereçamento."
+            },
+            {
+                question: "Quais são as três topologias físicas WAN mais comuns?",
+                options: [
+                    "Bus, Ring, Star",
+                    "Ponto a ponto, Hub-and-spoke (estrela), Malha (mesh)",
+                    "Linear, Circular, Triangular",
+                    "Simples, Dupla, Tripla"
+                ],
+                correct: 1,
+                explanation: "As três topologias WAN mais comuns são: Ponto a ponto (conexão direta entre dois pontos), Hub-and-spoke (site central conecta filiais) e Malha (todos conectados a todos)."
+            },
+            {
+                question: "Qual a principal diferença entre LAN e WAN?",
+                options: [
+                    "LAN é mais rápida, WAN é mais lenta",
+                    "LAN abrange área pequena com alta velocidade, WAN abrange área ampla com velocidade menor",
+                    "LAN é privada, WAN é pública",
+                    "LAN usa cabos, WAN usa wireless"
+                ],
+                correct: 1,
+                explanation: "LAN (Local Area Network) cobre áreas pequenas com alta velocidade e é administrada por uma organização. WAN (Wide Area Network) cobre áreas geográficas amplas com velocidades menores."
+            },
+            {
+                question: "O que caracteriza uma rede convergente?",
+                options: [
+                    "Apenas transmissão de dados",
+                    "Transporta dados, voz e vídeo na mesma infraestrutura",
+                    "Usa apenas protocolos proprietários",
+                    "Funciona apenas em redes locais"
+                ],
+                correct: 1,
+                explanation: "Redes convergentes transportam múltiplos serviços (dados, voz, vídeo) em uma única infraestrutura, usando o mesmo conjunto de regras e padrões."
+            },
+            {
+                question: "Quais são as quatro características básicas de uma arquitetura de rede confiável?",
+                options: [
+                    "Velocidade, Custo, Simplicidade, Compatibilidade",
+                    "Tolerância a falhas, Escalabilidade, QoS, Segurança",
+                    "Hardware, Software, Protocolos, Aplicações",
+                    "Cabeado, Wireless, Fibra, Coaxial"
+                ],
+                correct: 1,
+                explanation: "Uma arquitetura de rede confiável deve abordar: Tolerância a falhas (redundância), Escalabilidade (crescimento), QoS (qualidade de serviço) e Segurança."
+            },
+            // Sistema Binário e Hexadecimal
+            {
+                question: "Qual é o valor decimal do número binário 11010110?",
+                options: [
+                    "214",
+                    "214",
+                    "216",
+                    "218"
+                ],
+                correct: 1,
+                explanation: "11010110 em binário = 128+64+0+16+0+4+2+0 = 214 em decimal. Cada posição representa uma potência de 2."
+            },
+            {
+                question: "Como converter o decimal 168 para binário?",
+                options: [
+                    "10101000",
+                    "10101000",
+                    "11101000",
+                    "10111000"
+                ],
+                correct: 1,
+                explanation: "168 = 128+32+8 = 10101000 em binário. Subtraindo sucessivamente as potências de 2: 168-128=40, 40-32=8, 8-8=0."
+            },
+            {
+                question: "No sistema hexadecimal, que dígitos são usados?",
+                options: [
+                    "0-9",
+                    "0-9 e A-F",
+                    "0-7",
+                    "0-15"
+                ],
+                correct: 1,
+                explanation: "Hexadecimal usa base 16 com dígitos 0-9 e letras A-F (A=10, B=11, C=12, D=13, E=14, F=15). É usado em endereços IPv6 e MAC."
+            },
+            // Tipos de Comunicação
+            {
+                question: "Qual é a diferença entre comunicação half-duplex e full-duplex?",
+                options: [
+                    "Half-duplex é mais rápido",
+                    "Half-duplex permite apenas um dispositivo transmitir por vez, full-duplex permite transmissão simultânea",
+                    "Full-duplex usa mais energia",
+                    "São métodos idênticos"
+                ],
+                correct: 1,
+                explanation: "Half-duplex permite que apenas um dispositivo transmita por vez (usado em WLANs e hubs). Full-duplex permite transmissão simultânea nos dois sentidos (switches Ethernet modernos)."
+            },
+            {
+                question: "Em que tipo de rede é usado controle de acesso baseado em contenção?",
+                options: [
+                    "Redes full-duplex com switches",
+                    "Redes half-duplex onde dispositivos competem pelo meio",
+                    "Redes determinísticas",
+                    "Redes ponto-a-ponto"
+                ],
+                correct: 1,
+                explanation: "Controle de acesso baseado em contenção é usado em redes multi-acesso half-duplex onde todos os nós competem pelo uso do meio compartilhado (como Ethernet hub ou WLAN)."
             }
         ]
     },
@@ -584,6 +790,288 @@ const quizData = {
                 ],
                 correct: 1,
                 explanation: "IAB (Internet Architecture Board) é responsável pelo gerenciamento e desenvolvimento geral dos padrões da Internet."
+            }
+        ]
+    },
+
+    git: {
+        title: "Git e GitHub",
+        subtitle: "Comandos Git, controle de versão, GitHub e boas práticas",
+        questions: [
+            {
+                question: "Qual comando inicializa um novo repositório Git?",
+                options: [
+                    "git start",
+                    "git init",
+                    "git create",
+                    "git new"
+                ],
+                correct: 1,
+                explanation: "O comando 'git init' inicializa um novo repositório Git no diretório atual, criando a pasta .git com toda a estrutura necessária."
+            },
+            {
+                question: "Qual a diferença entre 'git add .' e 'git add -A'?",
+                options: [
+                    "Não há diferença, fazem exatamente a mesma coisa",
+                    "'git add .' adiciona arquivos do diretório atual, 'git add -A' adiciona todos os arquivos do repositório",
+                    "'git add -A' é mais rápido que 'git add .'",
+                    "'git add .' é mais seguro que 'git add -A'"
+                ],
+                correct: 1,
+                explanation: "'git add .' adiciona arquivos modificados e novos apenas do diretório atual e subdiretórios. 'git add -A' (ou --all) adiciona todos os arquivos modificados, novos e removidos de todo o repositório."
+            },
+            {
+                question: "Como desfazer o último commit mantendo as alterações no working directory?",
+                options: [
+                    "git revert HEAD",
+                    "git reset --soft HEAD~1",
+                    "git undo",
+                    "git delete HEAD"
+                ],
+                correct: 1,
+                explanation: "'git reset --soft HEAD~1' desfaz o último commit mas mantém as alterações no staging area. Para manter no working directory use '--mixed' ou apenas 'git reset HEAD~1'."
+            },
+            {
+                question: "O que significa 'HEAD' no Git?",
+                options: [
+                    "O primeiro commit do repositório",
+                    "Ponteiro para o commit atual (snapshot atual)",
+                    "O branch principal",
+                    "O último commit enviado para o remote"
+                ],
+                correct: 1,
+                explanation: "HEAD é um ponteiro que indica qual commit está atualmente 'checked out'. Normalmente aponta para o último commit do branch atual."
+            },
+            {
+                question: "Qual comando mostra o histórico de commits de forma resumida?",
+                options: [
+                    "git history",
+                    "git log --oneline",
+                    "git show",
+                    "git commits"
+                ],
+                correct: 1,
+                explanation: "'git log --oneline' mostra o histórico de commits em formato resumido, uma linha por commit com hash abreviado e mensagem."
+            },
+            {
+                question: "Como criar e mudar para uma nova branch em um único comando?",
+                options: [
+                    "git branch -new nome",
+                    "git checkout -b nome",
+                    "git create branch nome",
+                    "git new-branch nome"
+                ],
+                correct: 1,
+                explanation: "'git checkout -b nome' cria uma nova branch e muda para ela imediatamente. Alternativamente, 'git switch -c nome' (comando mais moderno)."
+            },
+            {
+                question: "Qual a diferença entre 'git merge' e 'git rebase'?",
+                options: [
+                    "Não há diferença prática",
+                    "Merge preserva histórico com commit de merge, rebase cria histórico linear",
+                    "Rebase é mais seguro que merge",
+                    "Merge é mais rápido que rebase"
+                ],
+                correct: 1,
+                explanation: "Git merge preserva o histórico completo criando um commit de merge. Git rebase reaplica commits sequencialmente criando um histórico linear mais limpo."
+            },
+            {
+                question: "O que faz o comando 'git stash'?",
+                options: [
+                    "Faz commit das alterações",
+                    "Salva temporariamente alterações não commitadas",
+                    "Apaga todas as alterações",
+                    "Sincroniza com o repositório remoto"
+                ],
+                correct: 1,
+                explanation: "'git stash' salva temporariamente as alterações não commitadas, permitindo limpar o working directory sem perder o trabalho."
+            },
+            {
+                question: "Como ver as diferenças entre o working directory e o staging area?",
+                options: [
+                    "git status",
+                    "git diff",
+                    "git show",
+                    "git compare"
+                ],
+                correct: 1,
+                explanation: "'git diff' mostra as diferenças entre working directory e staging area. Use 'git diff --staged' para ver diferenças entre staging area e último commit."
+            },
+            {
+                question: "Qual comando desfaz alterações em um arquivo específico no working directory?",
+                options: [
+                    "git undo arquivo",
+                    "git checkout -- arquivo",
+                    "git delete arquivo",
+                    "git clean arquivo"
+                ],
+                correct: 1,
+                explanation: "'git checkout -- arquivo' restaura o arquivo ao estado do último commit. No Git moderno, use 'git restore arquivo'."
+            },
+            {
+                question: "O que é um 'Pull Request' no GitHub?",
+                options: [
+                    "Um comando para baixar código",
+                    "Solicitação para revisar e mergear mudanças de uma branch",
+                    "Um tipo especial de commit",
+                    "Uma forma de fazer backup"
+                ],
+                correct: 1,
+                explanation: "Pull Request é uma funcionalidade do GitHub para solicitar a revisão e merge de mudanças de uma branch para outra, facilitando colaboração e code review."
+            },
+            {
+                question: "Como clonar apenas a branch principal de um repositório grande?",
+                options: [
+                    "git clone --single-branch",
+                    "git clone --depth 1 --single-branch URL",
+                    "git clone --main-only",
+                    "git clone --fast"
+                ],
+                correct: 1,
+                explanation: "'git clone --depth 1 --single-branch URL' clona apenas o último commit da branch padrão, útil para repositórios grandes."
+            },
+            {
+                question: "O que significa 'fast-forward' em um merge?",
+                options: [
+                    "Merge executado rapidamente",
+                    "Merge sem criar commit adicional, apenas movendo o ponteiro da branch",
+                    "Merge com prioridade alta",
+                    "Merge automático sem conflitos"
+                ],
+                correct: 1,
+                explanation: "Fast-forward acontece quando a branch de destino não teve commits novos, então o Git simplesmente move o ponteiro para frente sem criar commit de merge."
+            },
+            {
+                question: "Como listar todas as branches (locais e remotas)?",
+                options: [
+                    "git branch --list",
+                    "git branch -a",
+                    "git show branches",
+                    "git list"
+                ],
+                correct: 1,
+                explanation: "'git branch -a' lista todas as branches locais e remotas. Use 'git branch' para apenas locais e 'git branch -r' para apenas remotas."
+            },
+            {
+                question: "Qual arquivo especifica quais arquivos o Git deve ignorar?",
+                options: [
+                    ".ignore",
+                    ".gitignore",
+                    ".gitexclude",
+                    ".exclude"
+                ],
+                correct: 1,
+                explanation: "O arquivo '.gitignore' especifica patterns de arquivos e pastas que o Git deve ignorar. Deve estar na raiz do repositório."
+            },
+            {
+                question: "Como alterar a mensagem do último commit?",
+                options: [
+                    "git change-message",
+                    "git commit --amend",
+                    "git edit-commit",
+                    "git modify"
+                ],
+                correct: 1,
+                explanation: "'git commit --amend' permite alterar a mensagem do último commit ou adicionar arquivos esquecidos ao último commit."
+            },
+            {
+                question: "O que é 'origin' no Git?",
+                options: [
+                    "O primeiro commit",
+                    "Nome padrão do repositório remoto",
+                    "A branch principal",
+                    "O diretório de origem"
+                ],
+                correct: 1,
+                explanation: "'origin' é o nome padrão dado ao repositório remoto quando você clona um repositório. É apenas uma convenção, pode ser renomeado."
+            },
+            {
+                question: "Como ver quem fez cada alteração em um arquivo?",
+                options: [
+                    "git history arquivo",
+                    "git blame arquivo",
+                    "git who arquivo",
+                    "git author arquivo"
+                ],
+                correct: 1,
+                explanation: "'git blame arquivo' mostra linha por linha quem foi o autor de cada alteração e em qual commit foi feita."
+            },
+            {
+                question: "Qual comando sincroniza sua branch local com a remota?",
+                options: [
+                    "git sync",
+                    "git pull origin branch-name",
+                    "git update",
+                    "git refresh"
+                ],
+                correct: 1,
+                explanation: "'git pull origin branch-name' baixa e faz merge das alterações da branch remota na sua branch local atual."
+            },
+            {
+                question: "Como criar uma tag no Git?",
+                options: [
+                    "git mark v1.0",
+                    "git tag v1.0",
+                    "git version v1.0",
+                    "git label v1.0"
+                ],
+                correct: 1,
+                explanation: "'git tag v1.0' cria uma tag leve. Use 'git tag -a v1.0 -m \"mensagem\"' para tag anotada com metadados."
+            },
+            {
+                question: "O que acontece quando você executa 'git push' sem especificar a branch?",
+                options: [
+                    "Sempre dá erro",
+                    "Faz push da branch atual para seu upstream configurado",
+                    "Faz push de todas as branches",
+                    "Faz push apenas da main"
+                ],
+                correct: 1,
+                explanation: "Se o upstream estiver configurado, faz push da branch atual. Se não, pode dar erro ou pedir para configurar o upstream com --set-upstream."
+            },
+            {
+                question: "Como configurar seu nome e email globalmente no Git?",
+                options: [
+                    "git setup --name --email",
+                    "git config --global user.name \"Nome\" && git config --global user.email \"email\"",
+                    "git user --set name email",
+                    "git profile --name --email"
+                ],
+                correct: 1,
+                explanation: "Use 'git config --global user.name \"Seu Nome\"' e 'git config --global user.email \"seu@email.com\"' para configurar globalmente."
+            },
+            {
+                question: "Qual é a diferença entre 'git fetch' e 'git pull'?",
+                options: [
+                    "São comandos idênticos",
+                    "'git fetch' apenas baixa, 'git pull' baixa e faz merge",
+                    "'git pull' é mais seguro",
+                    "'git fetch' é mais rápido"
+                ],
+                correct: 1,
+                explanation: "'git fetch' apenas baixa as alterações do remoto sem fazer merge. 'git pull' faz fetch + merge automaticamente."
+            },
+            {
+                question: "Como resolver conflitos de merge?",
+                options: [
+                    "git solve conflicts",
+                    "Editar arquivos manualmente, fazer git add e git commit",
+                    "git auto-merge",
+                    "git fix"
+                ],
+                correct: 1,
+                explanation: "Para resolver conflitos: 1) Editar os arquivos removendo marcadores de conflito, 2) git add nos arquivos resolvidos, 3) git commit para finalizar o merge."
+            },
+            {
+                question: "Em que ano o Git foi criado e por quem?",
+                options: [
+                    "2004 por GitHub Inc.",
+                    "2005 por Linus Torvalds",
+                    "2006 por Microsoft",
+                    "2003 por Apache Foundation"
+                ],
+                correct: 1,
+                explanation: "Git foi criado em 2005 por Linus Torvalds para gerenciar o desenvolvimento do kernel Linux após problemas com o sistema anterior (BitKeeper)."
             }
         ]
     },
