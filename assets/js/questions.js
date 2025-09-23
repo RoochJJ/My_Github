@@ -794,6 +794,288 @@ const quizData = {
         ]
     },
 
+    git: {
+        title: "Git e GitHub",
+        subtitle: "Comandos Git, controle de versão, GitHub e boas práticas",
+        questions: [
+            {
+                question: "Qual comando inicializa um novo repositório Git?",
+                options: [
+                    "git start",
+                    "git init",
+                    "git create",
+                    "git new"
+                ],
+                correct: 1,
+                explanation: "O comando 'git init' inicializa um novo repositório Git no diretório atual, criando a pasta .git com toda a estrutura necessária."
+            },
+            {
+                question: "Qual a diferença entre 'git add .' e 'git add -A'?",
+                options: [
+                    "Não há diferença, fazem exatamente a mesma coisa",
+                    "'git add .' adiciona arquivos do diretório atual, 'git add -A' adiciona todos os arquivos do repositório",
+                    "'git add -A' é mais rápido que 'git add .'",
+                    "'git add .' é mais seguro que 'git add -A'"
+                ],
+                correct: 1,
+                explanation: "'git add .' adiciona arquivos modificados e novos apenas do diretório atual e subdiretórios. 'git add -A' (ou --all) adiciona todos os arquivos modificados, novos e removidos de todo o repositório."
+            },
+            {
+                question: "Como desfazer o último commit mantendo as alterações no working directory?",
+                options: [
+                    "git revert HEAD",
+                    "git reset --soft HEAD~1",
+                    "git undo",
+                    "git delete HEAD"
+                ],
+                correct: 1,
+                explanation: "'git reset --soft HEAD~1' desfaz o último commit mas mantém as alterações no staging area. Para manter no working directory use '--mixed' ou apenas 'git reset HEAD~1'."
+            },
+            {
+                question: "O que significa 'HEAD' no Git?",
+                options: [
+                    "O primeiro commit do repositório",
+                    "Ponteiro para o commit atual (snapshot atual)",
+                    "O branch principal",
+                    "O último commit enviado para o remote"
+                ],
+                correct: 1,
+                explanation: "HEAD é um ponteiro que indica qual commit está atualmente 'checked out'. Normalmente aponta para o último commit do branch atual."
+            },
+            {
+                question: "Qual comando mostra o histórico de commits de forma resumida?",
+                options: [
+                    "git history",
+                    "git log --oneline",
+                    "git show",
+                    "git commits"
+                ],
+                correct: 1,
+                explanation: "'git log --oneline' mostra o histórico de commits em formato resumido, uma linha por commit com hash abreviado e mensagem."
+            },
+            {
+                question: "Como criar e mudar para uma nova branch em um único comando?",
+                options: [
+                    "git branch -new nome",
+                    "git checkout -b nome",
+                    "git create branch nome",
+                    "git new-branch nome"
+                ],
+                correct: 1,
+                explanation: "'git checkout -b nome' cria uma nova branch e muda para ela imediatamente. Alternativamente, 'git switch -c nome' (comando mais moderno)."
+            },
+            {
+                question: "Qual a diferença entre 'git merge' e 'git rebase'?",
+                options: [
+                    "Não há diferença prática",
+                    "Merge preserva histórico com commit de merge, rebase cria histórico linear",
+                    "Rebase é mais seguro que merge",
+                    "Merge é mais rápido que rebase"
+                ],
+                correct: 1,
+                explanation: "Git merge preserva o histórico completo criando um commit de merge. Git rebase reaplica commits sequencialmente criando um histórico linear mais limpo."
+            },
+            {
+                question: "O que faz o comando 'git stash'?",
+                options: [
+                    "Faz commit das alterações",
+                    "Salva temporariamente alterações não commitadas",
+                    "Apaga todas as alterações",
+                    "Sincroniza com o repositório remoto"
+                ],
+                correct: 1,
+                explanation: "'git stash' salva temporariamente as alterações não commitadas, permitindo limpar o working directory sem perder o trabalho."
+            },
+            {
+                question: "Como ver as diferenças entre o working directory e o staging area?",
+                options: [
+                    "git status",
+                    "git diff",
+                    "git show",
+                    "git compare"
+                ],
+                correct: 1,
+                explanation: "'git diff' mostra as diferenças entre working directory e staging area. Use 'git diff --staged' para ver diferenças entre staging area e último commit."
+            },
+            {
+                question: "Qual comando desfaz alterações em um arquivo específico no working directory?",
+                options: [
+                    "git undo arquivo",
+                    "git checkout -- arquivo",
+                    "git delete arquivo",
+                    "git clean arquivo"
+                ],
+                correct: 1,
+                explanation: "'git checkout -- arquivo' restaura o arquivo ao estado do último commit. No Git moderno, use 'git restore arquivo'."
+            },
+            {
+                question: "O que é um 'Pull Request' no GitHub?",
+                options: [
+                    "Um comando para baixar código",
+                    "Solicitação para revisar e mergear mudanças de uma branch",
+                    "Um tipo especial de commit",
+                    "Uma forma de fazer backup"
+                ],
+                correct: 1,
+                explanation: "Pull Request é uma funcionalidade do GitHub para solicitar a revisão e merge de mudanças de uma branch para outra, facilitando colaboração e code review."
+            },
+            {
+                question: "Como clonar apenas a branch principal de um repositório grande?",
+                options: [
+                    "git clone --single-branch",
+                    "git clone --depth 1 --single-branch URL",
+                    "git clone --main-only",
+                    "git clone --fast"
+                ],
+                correct: 1,
+                explanation: "'git clone --depth 1 --single-branch URL' clona apenas o último commit da branch padrão, útil para repositórios grandes."
+            },
+            {
+                question: "O que significa 'fast-forward' em um merge?",
+                options: [
+                    "Merge executado rapidamente",
+                    "Merge sem criar commit adicional, apenas movendo o ponteiro da branch",
+                    "Merge com prioridade alta",
+                    "Merge automático sem conflitos"
+                ],
+                correct: 1,
+                explanation: "Fast-forward acontece quando a branch de destino não teve commits novos, então o Git simplesmente move o ponteiro para frente sem criar commit de merge."
+            },
+            {
+                question: "Como listar todas as branches (locais e remotas)?",
+                options: [
+                    "git branch --list",
+                    "git branch -a",
+                    "git show branches",
+                    "git list"
+                ],
+                correct: 1,
+                explanation: "'git branch -a' lista todas as branches locais e remotas. Use 'git branch' para apenas locais e 'git branch -r' para apenas remotas."
+            },
+            {
+                question: "Qual arquivo especifica quais arquivos o Git deve ignorar?",
+                options: [
+                    ".ignore",
+                    ".gitignore",
+                    ".gitexclude",
+                    ".exclude"
+                ],
+                correct: 1,
+                explanation: "O arquivo '.gitignore' especifica patterns de arquivos e pastas que o Git deve ignorar. Deve estar na raiz do repositório."
+            },
+            {
+                question: "Como alterar a mensagem do último commit?",
+                options: [
+                    "git change-message",
+                    "git commit --amend",
+                    "git edit-commit",
+                    "git modify"
+                ],
+                correct: 1,
+                explanation: "'git commit --amend' permite alterar a mensagem do último commit ou adicionar arquivos esquecidos ao último commit."
+            },
+            {
+                question: "O que é 'origin' no Git?",
+                options: [
+                    "O primeiro commit",
+                    "Nome padrão do repositório remoto",
+                    "A branch principal",
+                    "O diretório de origem"
+                ],
+                correct: 1,
+                explanation: "'origin' é o nome padrão dado ao repositório remoto quando você clona um repositório. É apenas uma convenção, pode ser renomeado."
+            },
+            {
+                question: "Como ver quem fez cada alteração em um arquivo?",
+                options: [
+                    "git history arquivo",
+                    "git blame arquivo",
+                    "git who arquivo",
+                    "git author arquivo"
+                ],
+                correct: 1,
+                explanation: "'git blame arquivo' mostra linha por linha quem foi o autor de cada alteração e em qual commit foi feita."
+            },
+            {
+                question: "Qual comando sincroniza sua branch local com a remota?",
+                options: [
+                    "git sync",
+                    "git pull origin branch-name",
+                    "git update",
+                    "git refresh"
+                ],
+                correct: 1,
+                explanation: "'git pull origin branch-name' baixa e faz merge das alterações da branch remota na sua branch local atual."
+            },
+            {
+                question: "Como criar uma tag no Git?",
+                options: [
+                    "git mark v1.0",
+                    "git tag v1.0",
+                    "git version v1.0",
+                    "git label v1.0"
+                ],
+                correct: 1,
+                explanation: "'git tag v1.0' cria uma tag leve. Use 'git tag -a v1.0 -m \"mensagem\"' para tag anotada com metadados."
+            },
+            {
+                question: "O que acontece quando você executa 'git push' sem especificar a branch?",
+                options: [
+                    "Sempre dá erro",
+                    "Faz push da branch atual para seu upstream configurado",
+                    "Faz push de todas as branches",
+                    "Faz push apenas da main"
+                ],
+                correct: 1,
+                explanation: "Se o upstream estiver configurado, faz push da branch atual. Se não, pode dar erro ou pedir para configurar o upstream com --set-upstream."
+            },
+            {
+                question: "Como configurar seu nome e email globalmente no Git?",
+                options: [
+                    "git setup --name --email",
+                    "git config --global user.name \"Nome\" && git config --global user.email \"email\"",
+                    "git user --set name email",
+                    "git profile --name --email"
+                ],
+                correct: 1,
+                explanation: "Use 'git config --global user.name \"Seu Nome\"' e 'git config --global user.email \"seu@email.com\"' para configurar globalmente."
+            },
+            {
+                question: "Qual é a diferença entre 'git fetch' e 'git pull'?",
+                options: [
+                    "São comandos idênticos",
+                    "'git fetch' apenas baixa, 'git pull' baixa e faz merge",
+                    "'git pull' é mais seguro",
+                    "'git fetch' é mais rápido"
+                ],
+                correct: 1,
+                explanation: "'git fetch' apenas baixa as alterações do remoto sem fazer merge. 'git pull' faz fetch + merge automaticamente."
+            },
+            {
+                question: "Como resolver conflitos de merge?",
+                options: [
+                    "git solve conflicts",
+                    "Editar arquivos manualmente, fazer git add e git commit",
+                    "git auto-merge",
+                    "git fix"
+                ],
+                correct: 1,
+                explanation: "Para resolver conflitos: 1) Editar os arquivos removendo marcadores de conflito, 2) git add nos arquivos resolvidos, 3) git commit para finalizar o merge."
+            },
+            {
+                question: "Em que ano o Git foi criado e por quem?",
+                options: [
+                    "2004 por GitHub Inc.",
+                    "2005 por Linus Torvalds",
+                    "2006 por Microsoft",
+                    "2003 por Apache Foundation"
+                ],
+                correct: 1,
+                explanation: "Git foi criado em 2005 por Linus Torvalds para gerenciar o desenvolvimento do kernel Linux após problemas com o sistema anterior (BitKeeper)."
+            }
+        ]
+    },
+
     filosofia: {
         title: "Filosofia e Pensadores",
         subtitle: "Grandes filósofos, correntes de pensamento e conceitos filosóficos",
